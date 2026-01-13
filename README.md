@@ -2,6 +2,13 @@
 
 A BetterDiscord plugin that adds a button to find all servers with active voice chats.
 
+## Screenshots
+
+<p align="center">
+  <img src="screenshots/server-list.png" width="400" alt="Server List View">
+  <img src="screenshots/expanded-view.png" width="400" alt="Expanded View with Friends">
+</p>
+
 ## Features
 
 - **Voice Activity Overview** - See all servers with active voice channels at a glance
