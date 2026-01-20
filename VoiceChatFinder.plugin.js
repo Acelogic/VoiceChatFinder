@@ -19,6 +19,22 @@ module.exports = class VoiceChatFinder {
                 width: 1000px !important;
                 max-width: 95vw !important;
             }
+            /* Fix voice panel clipping issue */
+            [class*="-container"]:has([class*="-connection"]):has([class*="-actionButtons"]) {
+                overflow: visible !important;
+                padding-top: 16px !important;
+            }
+            [class*="-connection"] {
+                overflow: visible !important;
+            }
+            [class*="-inner"]:has([class*="rtcConnectionStatus"]) {
+                overflow: visible !important;
+            }
+            [class*="rtcConnectionStatusWrapper"],
+            [class*="rtcConnectionStatus"],
+            [class*="labelWrapper"] {
+                overflow: visible !important;
+            }
             .vcf-panel-button {
                 width: 32px;
                 height: 32px;
@@ -32,6 +48,7 @@ module.exports = class VoiceChatFinder {
                 background: transparent;
                 border: none;
                 transition: color 0.15s, background-color 0.15s;
+                flex-shrink: 0;
             }
             .vcf-panel-button:hover {
                 color: var(--interactive-hover);
@@ -43,12 +60,13 @@ module.exports = class VoiceChatFinder {
             .vcf-panel-button.has-activity::after {
                 content: '';
                 position: absolute;
-                top: 2px;
-                right: 2px;
-                width: 8px;
-                height: 8px;
+                top: 4px;
+                right: 4px;
+                width: 6px;
+                height: 6px;
                 background: var(--status-positive);
                 border-radius: 50%;
+                pointer-events: none;
             }
             .vcf-modal-content {
                 padding: 0;
@@ -497,8 +515,9 @@ module.exports = class VoiceChatFinder {
         button.title = 'Voice Chat Finder';
         button.innerHTML = `
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 3a4 4 0 0 0-4 4v5a4 4 0 0 0 8 0V7a4 4 0 0 0-4-4Z"/>
-                <path d="M6 12a1 1 0 0 0-2 0 8 8 0 0 0 7 7.93V22a1 1 0 1 0 2 0v-2.07A8 8 0 0 0 20 12a1 1 0 1 0-2 0 6 6 0 1 1-12 0Z"/>
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8V2z" opacity="0.9"/>
+                <path d="M12 6a6 6 0 0 1 6 6h-2a4 4 0 0 0-4-4V6z" opacity="0.6"/>
             </svg>
         `;
 
@@ -542,8 +561,9 @@ module.exports = class VoiceChatFinder {
             viewBox: "0 0 24 24",
             fill: "currentColor"
         },
-            React.createElement("path", {d: "M12 3a4 4 0 0 0-4 4v5a4 4 0 0 0 8 0V7a4 4 0 0 0-4-4Z"}),
-            React.createElement("path", {d: "M6 12a1 1 0 0 0-2 0 8 8 0 0 0 7 7.93V22a1 1 0 1 0 2 0v-2.07A8 8 0 0 0 20 12a1 1 0 1 0-2 0 6 6 0 1 1-12 0Z"})
+            React.createElement("circle", {cx: "12", cy: "12", r: "3"}),
+            React.createElement("path", {d: "M12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8V2z", opacity: "0.9"}),
+            React.createElement("path", {d: "M12 6a6 6 0 0 1 6 6h-2a4 4 0 0 0-4-4V6z", opacity: "0.6"})
         ));
     }
 
