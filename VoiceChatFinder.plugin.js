@@ -712,23 +712,18 @@ module.exports = class VoiceChatFinder {
     navigateToChannel(guildId, channelId) {
         const { Webpack, UI } = BdApi;
 
-        // Get the channel selector module to join voice channels
-        const ChannelActions = Webpack.getByKeys("selectVoiceChannel", "selectChannel");
-        const NavigationUtils = Webpack.getByKeys("transitionTo", "transitionToGuild");
+        // searchExports: true is required to find functions not on default exports
+        const selectVoiceChannel = Webpack.getModule(m => m?.selectVoiceChannel, { searchExports: true })?.selectVoiceChannel;
+        const transitionTo = Webpack.getModule(m => m?.transitionTo, { searchExports: true })?.transitionTo;
 
-        // Join the voice channel
-        if (ChannelActions?.selectVoiceChannel) {
-            ChannelActions.selectVoiceChannel(channelId);
+        if (selectVoiceChannel) {
+            selectVoiceChannel(channelId);
             UI.showToast("Joining voice channel...", { type: "success" });
-        } else if (ChannelActions?.selectChannel) {
-            ChannelActions.selectChannel(channelId);
+        } else if (transitionTo) {
+            transitionTo(`/channels/${guildId}/${channelId}`);
             UI.showToast("Joining voice channel...", { type: "success" });
         } else {
-            // Fallback: just navigate to the guild/channel
-            if (NavigationUtils?.transitionToGuild) {
-                NavigationUtils.transitionToGuild(guildId, channelId);
-            }
-            UI.showToast("Navigating to voice channel...", { type: "info" });
+            UI.showToast("Could not join channel — Discord internals may have changed", { type: "error" });
         }
     }
 
